@@ -1,21 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Stack = createStackNavigator();
+
+const FeedScreen = () => (
+  <View style={styles.layout}>
+    <Text style={styles.title}>Feed</Text>
+  </View>
+);
+
+const OverviewScreen = () => (
+  <View style={styles.layout}>
+    <Text style={styles.title}>Overview</Text>
+  </View>
+);
+
+const Tab = createBottomTabNavigator();
+
+export const AppNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="Feed" component={FeedScreen} />
+    <Tab.Screen name="Profile" component={ProfileNavigator} />
+  </Tab.Navigator>
+);
+
+const ProfileNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Overview" component={OverviewScreen} />
+  </Stack.Navigator>
+);
+
+const App = () => (
+  <NavigationContainer>
+    <AppNavigator />
+  </NavigationContainer>
+);
+
+export default App;
 
 const styles = StyleSheet.create({
-  container: {
+  layout: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 32,
+    marginBottom: 16,
   },
 });
